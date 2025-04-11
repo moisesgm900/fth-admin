@@ -1,0 +1,214 @@
+<form class="flex flex-col items-center justify-center pt-3" [formGroup]="form">
+  <div> <mat-form-field>
+      <mat-label>Selecciona una fecha</mat-label>
+      <!-- #docregion toggle -->
+      <input formControlName="date" matInput [matDatepicker]="picker" [matDatepickerFilter]="weekdayFilter">
+      <mat-hint>Dia/Mes/Año</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <!-- #enddocregion toggle -->
+      <mat-error>Ingresa un valor válido.</mat-error>
+
+    </mat-form-field>
+  </div>
+  <div class="mb-2 mt-2">
+    <button (click)="tablereport()" [disabled]="form.invalid"
+      class="mr-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+      Generar reporte mesa
+    </button>
+    <button (click)="generatespecies()" [disabled]="form.invalid"
+      class="mr-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+      Generar especies
+    </button>
+    <button (click)="generatehojapedido()" [disabled]="form.invalid"
+      class="mr-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+      Generar hoja pedido
+    </button>
+    <button (click)="generatequipococina()" [disabled]="form.invalid"
+      class="mr-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+      Generar equipo cocina
+    </button>
+  </div>
+
+  @if(statetablereport){
+    <h2  class="font-bold text-xl border-2 border-black p-2">Reporte de mesa</h2>
+  <div class="mb-2 mt-2">
+    <button (click)="descargartablereport()"
+      class="mr-2 bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded py-2 px-4 rounded inline-flex items-center">
+      <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+      </svg>
+      <span>Descargar PDF</span>
+    </button>
+    <button (click)="exporttableexcel()"
+      class="mr-2 bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded py-2 px-4 rounded inline-flex items-center">
+      <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+      </svg>
+      <span>Descargar XLS</span>
+    </button>
+  </div>
+  @for (group of groupedProducts | keyvalue; track group.key) {
+  <div class=" flex flex-col items-center">
+    <h2 class="mt-4 text-2xl font-bold text-center">
+      {{ group.key }}
+    </h2>
+    <div class="overflow-x-auto w-full flex justify-center">
+      <table class="mt-4 border border-gray-200 table-auto mx-auto">
+        <thead class="text-left bg-black text-white">
+          <tr>
+            <th class="px-4 py-2 min-w-[300px]">Producto</th>
+            <th class="px-4 py-2 min-w-[150px]">Cantidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (producto of group.value.items; track $index) {
+          <tr>
+            <td class="border px-4 py-2 text-left">{{ producto.product }}</td>
+            <td class="border px-4 py-2 text-left">{{ producto.sum }} {{producto.unit_medi_inter}}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  }
+  }
+<!-- este apartado es para las especies -->
+  @if(statespecies){
+    <h2  class="font-bold text-xl border-2 border-black p-2">Reporte de especies</h2>
+  <div class="mb-2 mt-2">
+    <button (click)="descargarespeciespdf()"
+      class="mr-2 bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded py-2 px-4 rounded inline-flex items-center">
+      <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+      </svg>
+      <span>Descargar PDF</span>
+    </button>
+    <button (click)="exportespeciesexcel()"
+      class="mr-2 bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded py-2 px-4 rounded inline-flex items-center">
+      <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+      </svg>
+      <span>Descargar XLS</span>
+    </button>
+  </div>
+  @for (group of orderdata | keyvalue; track group.key) {
+  <div class=" flex flex-col items-center">
+    <h2 class="mt-4 text-2xl font-bold text-center">
+      {{ group.key }}
+    </h2>
+    <div class="overflow-x-auto w-full flex justify-center">
+      <table class="mt-4 border border-gray-200 table-auto mx-auto">
+        <thead class="text-left bg-black text-white">
+          <tr>
+            <th class="px-4 py-2 min-w-[300px]">Producto</th>
+            <th class="px-4 py-2 min-w-[150px]">Cantidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (producto of group.value.items; track producto.cliente) {
+          <tr>
+            <td class="border px-4 py-2 text-left">{{ producto.product }}</td>
+            <td class="border px-4 py-2 text-left">{{ producto.qty }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  }
+  }
+
+  <!-- este apartado es para la hoja de pedido  -->
+
+  @if(statehojapedido){
+    <h2  class="font-bold text-xl border-2 border-black p-2">Reporte de hoja de pedido</h2>
+  <div class="mb-2 mt-2">
+    <button (click)="descargarhojapedidopdf()"
+      class="mr-2 bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded py-2 px-4 rounded inline-flex items-center">
+      <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+      </svg>
+      <span>Descargar PDF</span>
+    </button>
+    <button (click)="exportehojapedidoexcel()"
+      class="mr-2 bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded py-2 px-4 rounded inline-flex items-center">
+      <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+      </svg>
+      <span>Descargar XLS</span>
+    </button>
+  </div>
+  @for (group of groupedProducts | keyvalue; track group.key) {
+  <div class=" flex flex-col items-center">
+    <h2 class="mt-4 text-2xl font-bold text-center">
+      {{ group.key }}
+    </h2>
+    <div class="overflow-x-auto w-full flex justify-center">
+      <table class="mt-4 border border-gray-200 table-auto mx-auto">
+        <thead class="text-left bg-black text-white">
+          <tr>
+            <th class="px-4 py-2 min-w-[300px]">Producto</th>
+            <th class="px-4 py-2 min-w-[150px]">Cantidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (producto of group.value.items; track producto.cliente) {
+          <tr>
+            <td class="border px-4 py-2 text-left">{{ producto.product }}</td>
+            <td class="border px-4 py-2 text-left">{{ producto.sum }} {{producto.unit_medi_inter}}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  }
+  }
+ <!-- este apartado es para equipo de cocina-->
+
+ @if(stateequipococina){
+  <h2  class="font-bold text-xl border-2 border-black p-2">Reporte de hoja de equipo de cocina</h2>
+<div class="mb-2 mt-2">
+  <button (click)="descargarequipococinapdf()"
+    class="mr-2 bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded py-2 px-4 rounded inline-flex items-center">
+    <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+      <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+    </svg>
+    <span>Descargar PDF</span>
+  </button>
+  <button (click)="exportequipococinaexcel()"
+    class="mr-2 bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded py-2 px-4 rounded inline-flex items-center">
+    <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+      <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+    </svg>
+    <span>Descargar XLS</span>
+  </button>
+</div>
+@for (group of groupedProducts | keyvalue; track group.key) {
+<div class=" flex flex-col items-center">
+  <h2 class="mt-4 text-2xl font-bold text-center">
+    {{ group.key }}
+  </h2>
+  <div class="overflow-x-auto w-full flex justify-center">
+    <table class="mt-4 border border-gray-200 table-auto mx-auto">
+      <thead class="text-left bg-black text-white">
+        <tr>
+          <th class="px-4 py-2 min-w-[300px]">Producto</th>
+          <th class="px-4 py-2 min-w-[150px]">Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (producto of group.value.items; track producto.cliente) {
+        <tr>
+          <td class="border px-4 py-2 text-left">{{ producto.product }}</td>
+          <td class="border px-4 py-2 text-left">{{ producto.qty }} Pieza</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+}
+}
