@@ -1,11 +1,7 @@
-.no-pdf {
-    display: none;
-  }
-  table {
-    border-collapse: collapse;
+.active-link {
+    @apply text-orange-600 font-semibold;
   }
   
-  th, td {
-    text-align: left;
-    padding: 8px;
+  .active-link::after {
+    width: 100%;
   }

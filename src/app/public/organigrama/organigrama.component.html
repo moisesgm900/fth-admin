@@ -1,0 +1,27 @@
+<!-- Contenedor principal a pantalla completa -->
+<div class="w-full">
+  <div class="carousel-section w-full overflow-hidden relative">
+    <owl-carousel-o [options]="customOptions">
+      @for(slide of slides2; track $index){
+      <ng-container>
+        <ng-template carouselSlide [id]="slide.id">
+          <div class="slide-container relative group h-screen min-h-[400px] max-h-[800px]">
+            <!-- Contenedor de imagen que mantiene relación de aspecto -->
+            <div class="image-container w-full h-full flex justify-center items-center ">
+              <img [src]="slide.src" [alt]="slide.alt" 
+                   class="slide-img h-full w-auto max-w-full object-contain">
+              
+              <!-- Overlay para texto con animación que coincide con fadeIn/fadeOut -->
+              <div class="absolute inset-0  flex items-end p-6 sm:p-8 md:p-10 transition-opacity duration-700">
+                <div class="text-container transform transition-all duration-700 w-full max-w-[1200px] mx-auto">
+                  <h3 class=" sm:text-xl   font-bold mb-2 drop-shadow-lg">{{slide.title}}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ng-container>
+      }
+    </owl-carousel-o>
+  </div>
+</div>

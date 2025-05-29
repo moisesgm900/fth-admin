@@ -38,6 +38,7 @@ export class DocsvoluntersComponent implements OnInit {
   })
   constructor(private datePipe: DatePipe, public provid: ApiService,private exportExcelService: ExportExcelService ) {
     //console.log(this.provid.getVoluntersdoc());
+    
     this.papeletas = []
     this.labels = []
     this.client = []
@@ -46,9 +47,12 @@ export class DocsvoluntersComponent implements OnInit {
     this.papeletaspdf = {}
   }
   @ViewChild('wcheck', { static: false }) tabla!: ElementRef;
-
+activeButton: string = ''; // Controla el botón activo
+hoverButton: string = ''; // Controla el hover
   statepapeletas = false;
   numeroSalientes: any;
+  loadingPapeletas: boolean = false;
+  loadingEtiquetas: boolean = false;
   statelabels = false;
   stateallproducts = false;
   statewcheck = false;
@@ -97,6 +101,9 @@ export class DocsvoluntersComponent implements OnInit {
 
   // para generar la info de las papeletas
   Generate_distributionCom() {
+     this.loadingPapeletas = true;
+    this.activeButton = 'papeletas';
+
     this.labels = []
     this.allproducts = []
     this.groupedProducts = {}
@@ -110,8 +117,6 @@ export class DocsvoluntersComponent implements OnInit {
     this.provid.getVoluntersdoc('nutrition', 'tool', date).subscribe({
       next: (value: any) => {
         console.log(value)
-
-        console.log(this.numeroSalientes)
         if (value != false) {
           this.numeroSalientes = value[0].numerosalientes
           this.statepapeletas = true
@@ -119,6 +124,7 @@ export class DocsvoluntersComponent implements OnInit {
           this.statewcheck = false
           this.statewcheckfyv = false
           this.stateallproducts = false
+          this.loadingPapeletas = false;
         } else {
           alert('No hay informacion para mostrar')
         }
@@ -259,6 +265,7 @@ export class DocsvoluntersComponent implements OnInit {
 
   // trae la data para etiquetas 
   generatelabelsgetData() {
+    this.activeButton = 'etiquetas';
     this.papeletas = []
     this.groupedData = {}
     this.data = []
@@ -365,6 +372,7 @@ export class DocsvoluntersComponent implements OnInit {
   }
 
   generateallproductsdata() {
+    this.activeButton = 'todos-productos';
     this.papeletas = []
     this.groupedData = {}
     this.data = []
@@ -459,6 +467,7 @@ export class DocsvoluntersComponent implements OnInit {
   }
   // este trae el w-check para carnes frias
   generatewcheck() {
+    this.activeButton = 'wcheck1';
     this.papeletas = []
     this.groupedData = {}
     this.data = []
@@ -552,6 +561,7 @@ export class DocsvoluntersComponent implements OnInit {
 
   // este trae la info de la wcheck para frutas y verduras con unidad de medida Kg.
   generatecheckfyv() {
+    this.activeButton = 'wcheck2';
     this.papeletas = []
     this.groupedData = {}
     this.data = []

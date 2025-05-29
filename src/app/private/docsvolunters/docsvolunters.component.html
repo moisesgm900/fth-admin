@@ -1,217 +1,308 @@
-<form class="flex flex-col items-center justify-center pt-3" [formGroup]="form">
-  <div> <mat-form-field>
-      <mat-label>Selecciona una fecha</mat-label>
-      <input formControlName="date" matInput [matDatepicker]="picker" [matDatepickerFilter]="weekdayFilter">
-      <mat-hint>Dia/Mes/Año</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-      <mat-error>Ingresa un valor válido.</mat-error>
-    </mat-form-field>
-  </div>
-  <div class="mb-2 mt-2">
-    <button (click)="Generate_distributionCom()" [disabled]="form.invalid"
-      class="mr-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Generar
-      papeletas</button>
-    <button (click)="generatelabelsgetData()" [disabled]="form.invalid"
-      class="mr-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Generar
-      etiquetas</button>
-    <button (click)="generateallproductsdata()" [disabled]="form.invalid"
-      class="mr-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Generar
-      todos productos</button>
-    <button (click)="generatewcheck()" [disabled]="form.invalid"
-      class="mr-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Generar
-      w-check 1</button>
-    <button (click)="generatecheckfyv()" [disabled]="form.invalid"
-      class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Generar
-      w-check 2</button>
-  </div>
+<div class="flex flex-col md:flex-row gap-4 p-4 bg-gray-100 h-screen overflow-hidden">
+    <!-- Menú lateral -->
+<div class="w-full md:w-64 bg-white pb-16 rounded-xl shadow-md flex flex-col   h-full overflow-y-auto">
+        <div class="menu-header bg-orange-500 text-white p-4">
+            <h3 class="text-lg font-semibold">Generar Documentos</h3>
+        </div>
 
-  
+        <div class="menu-content flex-1 overflow-y-auto p-4 pr-2" [formGroup]="form">
+            <!-- Selector de fecha -->
+            <div class="mb-6" >
+                <mat-form-field class="w-full">
+                    <mat-label>Selecciona una fecha</mat-label>
+                    <input formControlName="date" matInput [matDatepicker]="picker" [matDatepickerFilter]="weekdayFilter">
+                    <mat-hint>Dia/Mes/Año</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error>Ingresa un valor válido.</mat-error>
+                </mat-form-field>
+            </div>
 
-  <div class="mb-2">
-    @if(statepapeletas){
-    <button (click)="generatePapeletas()"
-      class="mr-2 bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded py-2 px-4 rounded inline-flex items-center">
-      <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-      </svg>
-      <span>Descargar papeletas</span>
-    </button>
-    }
-    @if(statelabels){
-    <button (click)="generatelabelspdf()"
-      class="mr-2 bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded py-2 px-4 rounded inline-flex items-center">
-      <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-      </svg>
-      <span>Descargar etiquetas</span>
-    </button>
-    }
-    @if(stateallproducts){
-    <button (click)="generateallproductspdf()" [disabled]="form.invalid" [hidden]="!groupedData"
-      class="mr-2 bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded py-2 px-4 rounded inline-flex items-center">
-      <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-      </svg>
-      <span>Descargar todos productos</span>
-    </button>
-    }
-    @if(statewcheck){
-    <button (click)="generatewcheckpdf()" [disabled]="form.invalid" [hidden]="!groupedData"
-      class="mr-2 bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded py-2 px-4 rounded inline-flex items-center">
-      <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-      </svg>
-      <span>Descargar w-check 1 PDF</span>
-    </button>
-    <button (click)="generatewcheckexcelcarnes()" [disabled]="form.invalid" [hidden]="!groupedData"
-      class="mr-2 bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded py-2 px-4 rounded inline-flex items-center">
-      <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-      </svg>
-      <span>Descargar w-check 1 EXCEL</span>
-    </button>
-    }
-    @if(statewcheckfyv){
-    <button (click)="generatewchefyvpdf()" [disabled]="form.invalid" [hidden]="!groupedData"
-      class="mr-2 bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded py-2 px-4 rounded inline-flex items-center">
-      <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-      </svg>
-      <span>Descargar w-check 2</span>
-    </button>
-    <button (click)="generatewcheckexcelfyv()" [disabled]="form.invalid" [hidden]="!groupedData"
-      class="mr-2 bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded py-2 px-4 rounded inline-flex items-center">
-      <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-      </svg>
-      <span>Descargar w-check 2 EXCEL</span>
-    </button>
-    }
-  </div>
-
-  <!-- Informacion de etiquetas -->
-  @if(numeroSalientes){
-  <h1 class="font-bold text-xl border-2 border-black p-2">El número de cocinas que salió esta semana es:
-    {{numeroSalientes}}</h1>
-  }
-  <div class="ml-8 grid grid-cols-2 gap-4">
-
-    @for(linfo of labels; track $index){
-    <div>
-      <p>#{{linfo.cliente}}</p>
-      <p class="text-xl font-bold">{{linfo.product}}</p>
-      <p class="text-xl font-bold">{{linfo.qty}}</p>
-      <p class="text-sm ml-32">{{datelabel}}</p>
-
-    </div>
-    }
-  </div>
-</form>
-
-<!-- Este es el apartado para las papeletas -->
-@if(statepapeletas){
-@for (cliente of groupedData | keyvalue; track $index){
-<div class="flex items-center justify-center mt-4">
-  <h1 class="mr-60 ">SMP-{{numberD}} </h1>
-  <h1 class="text-2xl font-bold">#{{cliente.key}}</h1>
-  <h1 class="ml-60">{{datefull}}</h1>
-</div>
-@for( categoria of cliente.value | keyvalue ; track categoria.key){
-<div class="flex  justify-center mt-4">
-  <h1 class=" font-bold text-left text-xl  w-[800px]">{{ categoria.key }}</h1>
-</div>
-<div class=" flex flex-col items-center justify-center">
-  <table class="table-auto mt-2 border border-gray-200">
-    <thead class="text-left bg-black text-white">
-      <tr>
-        <th class="min-w-[500px] px-4 py-2">Producto</th>
-        <th class="min-w-[150px] px-4 py-2">Cantidad</th>
-        <th class="px-4 py-2">Check 1</th>
-        <th class="px-4 py-2">Check 2</th>
-      </tr>
-    </thead>
-    @for(producto of categoria.value; track $index){
-    <tbody>
-      <tr>
-        <td class="border px-4 py-2">{{ producto.product }} / {{producto.en_product}}</td>
-        <td class="border px-4 py-2">{{producto.product_uom_qty}} {{producto.unit_medi_inter}}</td>
-        <td class="border px-4 py-2"></td>
-        <td class="border px-4 py-2"></td>
-      </tr>
-    </tbody>
-    }
-  </table>
-</div>
-}
-}
-}
-<!-- Aqui termina lo de papeletas  -->
-<!-- Este es el apartado para todo los productos  -->
-@if(stateallproducts){
-@for (group of groupedProducts | keyvalue; track group.key) {
-<div>
-  <h2 class="flex items-center justify-center mt-4 text-2xl font-bold">{{ group.key }} </h2>
-  <table class="flex flex-col items-center justify-center pt-6 mt-4 table-auto mt-2 border border-gray-200">
-    <thead class="text-left bg-black text-white">
-      <tr>
-        <th class="min-w-[500px] px-4 py-2">Cocina</th>
-        <th class="min-w-[150px] px-4 py-2">Cantidad</th>
-      </tr>
-    </thead>
-    @for (producto of group.value.items; track producto.cliente) {
-    <tbody>
-      <tr>
-        <td class=" min-w-[500px] border px-4 py-2">#{{ producto.cliente }}</td>
-        <td class="min-w-[150px] border px-4 py-2">{{producto.qty}}</td>
-      </tr>
-    </tbody>
-    }
-    <h2 class="text-xl flex items-center justify-center font-bold mb-6 border-2 border-black p-2"> Total: {{group.key}}
-      {{group.value.totalQty |
-      number:'1.2-2'}} {{group.value.qtys}} </h2>
-  </table>
-</div>
-}
-}
-<!-- este es el apartado para wcheck carnes frias -->
-@if (statewcheck || statewcheckfyv) {
-@for (group of groupedProducts | keyvalue; track group.key) {
-<div class=" flex flex-col items-center">
-  <h2 class="mt-4 text-2xl font-bold text-center">
-    {{ group.key }}
-  </h2>
-  <div class="overflow-x-auto w-full flex justify-center">
-    <table class="mt-4 border border-gray-200 table-auto mx-auto">
-      <thead class="text-left bg-black text-white">
-        <tr>
-          <th class="px-4 py-2 min-w-[300px]">Cocina</th>
-          <th class="px-4 py-2 min-w-[150px]">Cantidad</th>
-          <th class="px-4 py-2">Cant. paquete</th>
-          <th class="px-4 py-2">Varianza</th>
-          <th class="px-4 py-2">%Varianza</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (producto of group.value.items; track producto.cliente) {
-        <tr>
-          <td class="border px-4 py-2 text-left">#{{ producto.cliente }}</td>
-          <td class="border px-4 py-2 text-left">{{ producto.qty }}</td>
-          <td class="border px-4 py-2"></td>
-          <td class="border px-4 py-2"></td>
-          <td class="border px-4 py-2"></td>
-        </tr>
+            <!-- Botones de generación -->
+    <!-- Botón Papeletas -->
+    <button (click)="Generate_distributionCom()" [disabled]="form.invalid || loadingPapeletas "
+        [class.bg-orange-100]="activeButton === 'papeletas'"
+        (mouseenter)="hoverButton = 'papeletas'"
+        (mouseleave)="hoverButton = ''"
+        class="w-full p-4 flex items-center transition-all duration-200 border-l-4 rounded-r-lg"
+        [class.border-orange-500]="activeButton === 'papeletas' || hoverButton === 'papeletas'"
+        [class.border-transparent]="activeButton !== 'papeletas' && hoverButton !== 'papeletas'"
+        [class.bg-gray-100]="hoverButton === 'papeletas' && activeButton !== 'papeletas'">
+              <div class="flex items-center">
+            @if(loadingPapeletas) {
+            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-orange-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            }
+            <span class="text-sm md:text-base font-medium uppercase">Papeletas</span>
+        </div>
+        
+        @if(loadingPapeletas) {
+        <span class="text-xs text-orange-600">Generando...</span>
         }
-      </tbody>
-    </table>
-  </div>
+    </button>
+<div>
+    <!-- Botón Etiquetas -->
+    <button (click)="generatelabelsgetData()" [disabled]="form.invalid"
+        [class.bg-orange-100]="activeButton === 'etiquetas'"
+        (mouseenter)="hoverButton = 'etiquetas'"
+        (mouseleave)="hoverButton = ''"
+        class="w-full p-4 flex items-center transition-all duration-200 border-l-4 rounded-r-lg"
+        [class.border-orange-500]="activeButton === 'etiquetas' || hoverButton === 'etiquetas'"
+        [class.border-transparent]="activeButton !== 'etiquetas' && hoverButton !== 'etiquetas'"
+        [class.bg-gray-100]="hoverButton === 'etiquetas' && activeButton !== 'etiquetas'">
+        <span class="text-sm md:text-base font-medium uppercase">Etiquetas</span>
+    </button>
 
-  <h2 class="text-xl font-bold  text-center border-2 border-black p-2">
-    Total: {{ group.key }} {{ group.value.totalQty | number:'1.2-2' }} {{ group.value.qtys }}
-  </h2>
+    <!-- Botón Todos Productos -->
+    <button (click)="generateallproductsdata()" [disabled]="form.invalid"
+        [class.bg-orange-100]="activeButton === 'todos-productos'"
+        (mouseenter)="hoverButton = 'todos-productos'"
+        (mouseleave)="hoverButton = ''"
+        class="w-full p-4 flex items-center transition-all duration-200 border-l-4 rounded-r-lg"
+        [class.border-orange-500]="activeButton === 'todos-productos' || hoverButton === 'todos-productos'"
+        [class.border-transparent]="activeButton !== 'todos-productos' && hoverButton !== 'todos-productos'"
+        [class.bg-gray-100]="hoverButton === 'todos-productos' && activeButton !== 'todos-productos'">
+        <span class="text-sm md:text-base font-medium uppercase">Todos Productos</span>
+    </button>
+
+    <!-- Botón W-Check 1 -->
+    <button (click)="generatewcheck()" [disabled]="form.invalid"
+        [class.bg-orange-100]="activeButton === 'wcheck1'"
+        (mouseenter)="hoverButton = 'wcheck1'"
+        (mouseleave)="hoverButton = ''"
+        class="w-full p-4 flex items-center transition-all duration-200 border-l-4 rounded-r-lg"
+        [class.border-orange-500]="activeButton === 'wcheck1' || hoverButton === 'wcheck1'"
+        [class.border-transparent]="activeButton !== 'wcheck1' && hoverButton !== 'wcheck1'"
+        [class.bg-gray-100]="hoverButton === 'wcheck1' && activeButton !== 'wcheck1'">
+        <span class="text-sm md:text-base font-medium uppercase">W-Check 1</span>
+    </button>
+
+    <!-- Botón W-Check 2 -->
+    <button (click)="generatecheckfyv()" [disabled]="form.invalid"
+        [class.bg-orange-100]="activeButton === 'wcheck2'"
+        (mouseenter)="hoverButton = 'wcheck2'"
+        (mouseleave)="hoverButton = ''"
+        class="w-full p-4 flex items-center transition-all duration-200 border-l-4 rounded-r-lg"
+        [class.border-orange-500]="activeButton === 'wcheck2' || hoverButton === 'wcheck2'"
+        [class.border-transparent]="activeButton !== 'wcheck2' && hoverButton !== 'wcheck2'"
+        [class.bg-gray-100]="hoverButton === 'wcheck2' && activeButton !== 'wcheck2'">
+        <span class="text-sm md:text-base font-medium uppercase">W-Check 2</span>
+    </button>
+            </div>
+
+            <!-- Botones de descarga -->
+            <div class="space-y-3">
+                <h4 class="font-semibold text-gray-700 mb-2 border-b pb-2">Descargar documentos</h4>
+                
+                @if(statepapeletas){
+                <button (click)="generatePapeletas()"
+                    class="w-full bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded inline-flex items-center transition-colors">
+                    <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                    </svg>
+                    <span>Papeletas PDF</span>
+                </button>
+                }
+                
+                @if(statelabels){
+                <button (click)="generatelabelspdf()"
+                    class="w-full bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded inline-flex items-center transition-colors">
+                    <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                    </svg>
+                    <span>Etiquetas PDF</span>
+                </button>
+                }
+                
+                @if(stateallproducts){
+                <button (click)="generateallproductspdf()" [disabled]="form.invalid" [hidden]="!groupedData"
+                    class="w-full bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded inline-flex items-center transition-colors">
+                    <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                    </svg>
+                    <span>Productos PDF</span>
+                </button>
+                }
+                
+                @if(statewcheck){
+                <button (click)="generatewcheckpdf()" [disabled]="form.invalid" [hidden]="!groupedData"
+                    class="w-full bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded inline-flex items-center transition-colors">
+                    <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                    </svg>
+                    <span>W-Check 1 PDF</span>
+                </button>
+                <button (click)="generatewcheckexcelcarnes()" [disabled]="form.invalid" [hidden]="!groupedData"
+                    class="w-full bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded inline-flex items-center transition-colors">
+                    <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                    </svg>
+                    <span>W-Check 1 Excel</span>
+                </button>
+                }
+                
+                @if(statewcheckfyv){
+                <button (click)="generatewchefyvpdf()" [disabled]="form.invalid" [hidden]="!groupedData"
+                    class="w-full bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded inline-flex items-center transition-colors">
+                    <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                    </svg>
+                    <span>W-Check 2 PDF</span>
+                </button>
+                <button (click)="generatewcheckexcelfyv()" [disabled]="form.invalid" [hidden]="!groupedData"
+                    class="w-full bg-transparent hover:bg-green-600 text-green-600 font-semibold hover:text-white py-2 px-4 border border-green-600 hover:border-transparent rounded inline-flex items-center transition-colors">
+                    <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                    </svg>
+                    <span>W-Check 2 Excel</span>
+                </button>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Área de contenido principal -->
+<div class="flex-1 bg-white rounded-xl shadow-md p-6 overflow-y-auto h-screen">
+        <!-- Información de cocinas salientes -->
+        @if(numeroSalientes){
+        <div class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 mb-6 rounded">
+            <h1 class="font-bold text-xl">El número de cocinas que salió esta semana es: {{numeroSalientes}}</h1>
+        </div>
+        }
+
+        <!-- Vista previa de etiquetas -->
+        @if(labels && labels.length > 0){
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800 border-b pb-2">Vista previa de etiquetas</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                @for(linfo of labels; track $index){
+                <div class="border border-gray-200 p-4 rounded-lg hover:shadow-md transition-shadow">
+                    <p class="text-sm text-gray-600">#{{linfo.cliente}}</p>
+                    <p class="text-lg font-bold text-gray-800">{{linfo.product}}</p>
+                    <p class="text-xl font-bold text-blue-600">{{linfo.qty}}</p>
+                    <p class="text-xs text-right text-gray-500 mt-2">{{datelabel}}</p>
+                </div>
+                }
+            </div>
+        </div>
+        }
+
+        <!-- Apartado para las papeletas -->
+        @if(statepapeletas && groupedData){
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800 border-b pb-2">Papeletas generadas</h2>
+            @for (cliente of groupedData | keyvalue; track $index){
+            <div class="bg-white p-6 rounded-lg shadow-sm mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-gray-600">SMP-{{numberD}}</span>
+                    <h1 class="text-2xl font-bold text-center text-blue-700">#{{cliente.key}}</h1>
+                    <span class="text-gray-600">{{datefull}}</span>
+                </div>
+                
+                @for( categoria of cliente.value | keyvalue ; track categoria.key){
+                <div class="mt-6">
+                    <h2 class="text-lg font-semibold text-gray-700 mb-2">{{ categoria.key }}</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full border border-gray-200">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-2 px-4 border-b text-left min-w-[300px]">Producto</th>
+                                    <th class="py-2 px-4 border-b text-left">Cantidad</th>
+                                    <th class="py-2 px-4 border-b text-left">Check 1</th>
+                                    <th class="py-2 px-4 border-b text-left">Check 2</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for(producto of categoria.value; track $index){
+                                <tr class="hover:bg-gray-50">
+                                    <td class="py-2 px-4 border-b">{{ producto.product }} / {{producto.en_product}}</td>
+                                    <td class="py-2 px-4 border-b">{{producto.product_uom_qty}} {{producto.unit_medi_inter}}</td>
+                                    <td class="py-2 px-4 border-b"></td>
+                                    <td class="py-2 px-4 border-b"></td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                }
+            </div>
+            }
+        </div>
+        }
+
+        <!-- Apartado para todos los productos -->
+        @if(stateallproducts && groupedProducts){
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800 border-b pb-2">Todos los productos</h2>
+            @for (group of groupedProducts | keyvalue; track group.key) {
+            <div class="bg-white p-6 rounded-lg shadow-sm mb-6">
+                <h2 class="text-xl font-bold text-center mb-4 text-blue-700">{{ group.key }}</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full border border-gray-200">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="py-2 px-4 border-b text-left min-w-[300px]">Cocina</th>
+                                <th class="py-2 px-4 border-b text-left">Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (producto of group.value.items; track producto.cliente) {
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-4 border-b">#{{ producto.cliente }}</td>
+                                <td class="py-2 px-4 border-b">{{producto.qty}}</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4 p-3 bg-blue-50 rounded border border-blue-100">
+                    <h2 class="text-lg font-bold text-center">Total: {{group.key}} {{group.value.totalQty | number:'1.2-2'}} {{group.value.qtys}}</h2>
+                </div>
+            </div>
+            }
+        </div>
+        }
+
+        <!-- Apartado para w-check -->
+        @if ((statewcheck || statewcheckfyv) && groupedProducts) {
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800 border-b pb-2">W-Check</h2>
+            @for (group of groupedProducts | keyvalue; track group.key) {
+            <div class="bg-white p-6 rounded-lg shadow-sm mb-6">
+                <h2 class="text-xl font-bold text-center mb-4 text-blue-700">{{ group.key }}</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full border border-gray-200">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="py-2 px-4 border-b text-left min-w-[200px]">Cocina</th>
+                                <th class="py-2 px-4 border-b text-left">Cantidad</th>
+                                <th class="py-2 px-4 border-b text-left">Cant. paquete</th>
+                                <th class="py-2 px-4 border-b text-left">Varianza</th>
+                                <th class="py-2 px-4 border-b text-left">%Varianza</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (producto of group.value.items; track producto.cliente) {
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-4 border-b">#{{ producto.cliente }}</td>
+                                <td class="py-2 px-4 border-b">{{ producto.qty }}</td>
+                                <td class="py-2 px-4 border-b"></td>
+                                <td class="py-2 px-4 border-b"></td>
+                                <td class="py-2 px-4 border-b"></td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4 p-3 bg-blue-50 rounded border border-blue-100">
+                    <h2 class="text-lg font-bold text-center">Total: {{ group.key }} {{ group.value.totalQty | number:'1.2-2' }} {{ group.value.qtys }}</h2>
+                </div>
+            </div>
+            }
+        </div>
+        }
+    </div>
 </div>
-}
-}
-
-
-<!-- este es para el apartado de wcheck frutas y verduras cuando la unidad de medida es kg -->

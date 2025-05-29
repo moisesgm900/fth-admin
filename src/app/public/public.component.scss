@@ -1,0 +1,7 @@
+.active-link {
+    @apply text-orange-600 font-semibold;
+  }
+  
+  .active-link::after {
+    width: 100%;
+  }

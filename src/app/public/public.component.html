@@ -1,49 +1,50 @@
-<nav class="bg-blue-500 text-white">
+<nav class="fixed w-full top-0 z-50 bg-white text-black border-b border-gray-200 shadow-sm">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
-       <img src="assets/favicon.ico" alt="">
-      <div class="flex-shrink-0">
-        <a href="#" class="text-lg font-bold">FTH</a>
+      <div class="flex items-center space-x-3">
+        <a routerLink="public" routerLinkActive="active-link" class="relative hover:bg-gray-300 px-3 py-2 rounded text-gray-700 transition-all duration-300 
+                  after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-orange-600 
+                  after:transition-all after:duration-300 hover:after:w-full">
+          <img src="assets/logofth.png" alt="Logo" class="h-10 w-auto">
+        </a>
       </div>
 
       <!-- Menú en pantallas grandes -->
       <div class="hidden md:flex items-center space-x-4 relative">
-        <!-- Menú desplegable de Reportes -->
-        <div class="relative" (click)="toggleDropdown()">
-          <button class="hover:bg-blue-600 px-3 py-2 rounded inline-flex items-center">
-            Reportes
-            <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-          @if(isReportDropdownOpen){
-          <div class="absolute bg-white text-black mt-2 rounded shadow-md z-50 w-48">
-            <a routerLink="/excelreports" class="block px-4 py-2 hover:bg-gray-200">Reportes Excel</a>
-            <a routerLink="/docvolunters" class="block px-4 py-2 hover:bg-gray-200">Documentos voluntarios</a>
-          </div>
-        }
-        </div>
-
-        <a href="#" class="hover:bg-blue-600 px-3 py-2 rounded">Acerca de</a>
-        <a href="#" class="hover:bg-blue-600 px-3 py-2 rounded">Contacto</a>
+        <a routerLink="intranet" routerLinkActive="active-link" class="relative hover:bg-gray-300 px-3 py-2 rounded text-gray-700 transition-all duration-300 
+                  after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-orange-600 
+                  after:transition-all after:duration-300 hover:after:w-full">Cultura Organizacional</a>
+        <a routerLink="organigrama" routerLinkActive="active-link" class="relative hover:bg-gray-300 px-3 py-2 rounded text-gray-700 transition-all duration-300 
+                  after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-orange-600 
+                  after:transition-all after:duration-300 hover:after:w-full">Organigrama</a>
+        <a routerLink="perfiles" routerLinkActive="active-link" class="relative hover:bg-gray-300 px-3 py-2 rounded text-gray-700 transition-all duration-300 
+                  after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-orange-600 
+                  after:transition-all after:duration-300 hover:after:w-full">Perfiles puestos</a>
+        <a routerLink="formatos" routerLinkActive="active-link" class="relative hover:bg-gray-300 px-3 py-2 rounded text-gray-700 transition-all duration-300 
+                  after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-orange-600 
+                  after:transition-all after:duration-300 hover:after:w-full">Formatos FTH</a>
 
         <!-- Botón de iniciar sesión -->
-        <a href="#" class="flex items-center bg-white text-blue-500 hover:bg-gray-200 px-3 py-2 rounded transition">
-          <svg class="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M5.121 17.804A7.5 7.5 0 1117.803 5.121M15 12h-6m6 0l-3-3m3 3l-3 3" />
-          </svg>
-          Iniciar Sesión
-        </a>
+        <div class="relative">
+          <a routerLink="login" routerLinkActive="active-link" class="flex items-center bg-white text-blue-500 hover:bg-gray-300 px-3 py-2 rounded transition-all duration-300 
+                    relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-orange-600 
+                    after:transition-all after:duration-300 hover:after:w-full">
+            <svg class="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5.121 17.804A7.5 7.5 0 1117.803 5.121M15 12h-6m6 0l-3-3m3 3l-3 3" />
+            </svg>
+            Iniciar Sesión
+          </a>
+        </div>
       </div>
 
       <!-- Botón menú en móviles -->
-      <div class="md:hidden flex items-center">
+      <div class="md:hidden flex items-center bg-orange-500">
         <button (click)="toggleMenu()" class="text-white focus:outline-none focus:ring">
           <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M4 6h16M4 12h16m-7 6h7" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
           </svg>
         </button>
       </div>
@@ -51,38 +52,51 @@
   </div>
 
   <!-- Menú desplegable móvil -->
-   @if(isMenuOpen){
-  <div  class="md:hidden bg-blue-500 px-2 pt-2 pb-3 space-y-1">
+  @if(isMenuOpen){
+  <div class="md:hidden px-2 pt-2 pb-3 space-y-1">
     <!-- Menú desplegable de Reportes para móviles -->
     <div>
-      <button (click)="toggleDropdown()" class="w-full text-left px-3 py-2 rounded hover:bg-blue-600 flex justify-between items-center">
+      <button (click)="toggleDropdown()"
+        class="w-full text-left px-3 py-2 rounded hover:bg-blue-600 flex justify-between items-center">
         Reportes
-        <svg class="h-4 w-4 transform transition-transform duration-200"
-          [class.rotate-180]="isReportDropdownOpen" xmlns="http://www.w3.org/2000/svg"
-          fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M19 9l-7 7-7-7" />
+        <svg class="h-4 w-4 transform transition-transform duration-200" [class.rotate-180]="isReportDropdownOpen"
+          xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
       @if(isReportDropdownOpen){
       <div class="pl-4">
-        <a routerLink="/excelreports" class="block px-3 py-2 rounded hover:bg-blue-600">Reportes Excel</a>
-        <a routerLink="/docvolunters" class="block px-3 py-2 rounded hover:bg-blue-600">Documentos voluntarios</a>
+        <a routerLink="intranet" routerLinkActive="active-link" class="relative hover:bg-gray-300 px-3 py-2 rounded text-gray-700 transition-all duration-300 
+                  after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-orange-600 
+                  after:transition-all after:duration-300 hover:after:w-full">Cultura Organizacional</a>
+        <a routerLink="perfiles" routerLinkActive="active-link" class="relative hover:bg-gray-300 px-3 py-2 rounded text-gray-700 transition-all duration-300 
+                  after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-orange-600 
+                  after:transition-all after:duration-300 hover:after:w-full">Perfiles puestos</a>
+        <a routerLink="perfiles" routerLinkActive="active-link" class="relative hover:bg-gray-300 px-3 py-2 rounded text-gray-700 transition-all duration-300 
+                  after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-orange-600 
+                  after:transition-all after:duration-300 hover:after:w-full">Formatos FTH</a>
       </div>
-    }
+      }
     </div>
 
-    <a href="#" class="block px-3 py-2 rounded hover:bg-blue-600">Acerca de</a>
-    <a href="#" class="block px-3 py-2 rounded hover:bg-blue-600">Contacto</a>
-    <a href="#" class="flex items-center bg-white text-blue-500 hover:bg-gray-200 px-3 py-2 rounded transition">
-      <svg class="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none"
-        viewBox="0 0 24 24" stroke="currentColor">
+    <a routerLink="intranet" routerLinkActive="active-link" class="block hover:bg-gray-300 px-3 py-2 rounded text-gray-700 transition-all duration-300 
+              after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-orange-600 
+              after:transition-all after:duration-300 hover:after:w-full">Formatos FTH</a>
+    <a routerLink="/public/login" class="block px-3 py-2 rounded hover:bg-gray-300">Contacto</a>
+    <a routerLink="/public/login"
+      class="flex items-center bg-white text-blue-500 hover:bg-gray-200 px-3 py-2 rounded transition">
+      <svg class="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           d="M5.121 17.804A7.5 7.5 0 1117.803 5.121M15 12h-6m6 0l-3-3m3 3l-3 3" />
       </svg>
       Iniciar Sesión
     </a>
   </div>
-}
+  }
 </nav>
-<router-outlet></router-outlet>
+
+<!-- Añade un margen superior al contenido para que no quede oculto detrás del navbar fijo -->
+<div class="pt-16">
+  <router-outlet></router-outlet>
+</div>

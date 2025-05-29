@@ -1,13 +1,48 @@
 /* You can add global styles to this file, and also import other style files */
-:root{
-//    color-scheme:  dark;
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  border-width: 1px !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
 }
-body{
 
+:root {
+  //    color-scheme:  dark;
+}
+
+body {}
+
+
+.error-snackbar {
+  --mdc-snackbar-container-color: #f44336;
+  --mat-mdc-snack-bar-button-color: white;
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-snack-bar-button-color: white;
+}
+
+.success-snackbar {
+  --mdc-snackbar-container-color: #2adf06;
+  --mat-mdc-snack-bar-button-color: white;
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-snack-bar-button-color: white;
 }
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+::ng-deep .textHighlightToolbarButton {
+  display: none !important;
+}
+  html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
